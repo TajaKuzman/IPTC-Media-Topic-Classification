@@ -33,7 +33,7 @@ Since 2010, the International Press Telecommunications Council (IPTC) maintains 
 
 For more information on the labels and the schema, see the [IPTC NewsCode guidelines](https://iptc.org/std/NewsCodes/guidelines/).
 
-Information on all labels, their levels, parent and child labels and definitions can be accessed from the [original spreadsheet](datasets/IPTC-MediaTopic-NewsCodes-mappings.xlsx) or the extracted JSON dictionary (datasets/iptc_mapping.json)[datasets/iptc_mapping.json]. We use the version of the schema from October 24, 2023.
+Information on all labels, their levels, parent and child labels and definitions can be accessed from the [original spreadsheet](datasets/IPTC-MediaTopic-NewsCodes-mappings.xlsx) or the JSON dictionary extracted from the spreadsheet [datasets/iptc_mapping.json]([datasets/iptc_mapping.json). We use the version of the schema from October 24, 2023.
 
 ```
 labels = ['disaster, accident and emergency incident',
