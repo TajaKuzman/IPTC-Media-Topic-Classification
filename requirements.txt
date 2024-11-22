@@ -1,0 +1,16 @@
+# notebook
+ipywidgets>=7.5
+notebook
+# analysis
+numpy
+pandas
+spacy
+torch
+transformers
+datasets
+matplotlib
+datachart
+# utility
+python-dotenv
+tqdm
+black
