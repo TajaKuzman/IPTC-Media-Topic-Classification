@@ -31,7 +31,7 @@ conda activate IPTC_env
 
 Since 2010, the International Press Telecommunications Council (IPTC) maintains a taxonomy for the categorization of news text. This taxonomy takes the form of a tree with 17 top-level topics such as politics, society, or sport. Each topic branches into subtopics until very specific topics are reached, such as adult education, impeachment, or missing person. The taxonomy can be visualized at https://show.newscodes.org/index.html?newscodes=medtop&lang=en-GB&startTo=Show.
 
-For more infromation, see the [IPTC NewsCode Guidelines](https://iptc.org/std/NewsCodes/guidelines/).
+For more information on the labels and the schema, see the [IPTC NewsCode guidelines](https://iptc.org/std/NewsCodes/guidelines/).
 
 Information on all labels, their levels, parent and child labels and definitions can be accessed from the [original spreadsheet](datasets/IPTC-MediaTopic-NewsCodes-mappings.xlsx) or the extracted JSON dictionary (datasets/iptc_mapping.json)[datasets/iptc_mapping.json]. We use the version of the schema from October 24, 2023.
 
