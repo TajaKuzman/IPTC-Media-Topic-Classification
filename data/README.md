@@ -1,14 +1,6 @@
 # Data
 
-This folder contains all of the data used in the experiments.
-
-The folder structure is as follows:
-
-- **raw.** The original, immutable data dump.
-- **interim.** Intermediate data that has been transformed.
-- **processed.** The final, canonical data sets for modeling.
-- **external.** Data from third-party sources.
-
-The folder structure has to be created. Since the data can be provided by
-DVC ([see home page](../README.md)) and is thus ignored in git, the described
-folder structure has to be created by the user.
+This directory contains the following files:
+- [IPTC_Annotation_Guidelines.pdf](IPTC_Annotation_Guidelines.pdf): guidelines for manual annotation, used to develop the IPTC-top-test test dataset
+- [IPTC-MediaTopic-NewsCodes-mappings.xlsx](IPTC-MediaTopic-NewsCodes-mappings.xlsx): original IPTC NewsCodes MediaTopic schema (version from October 24, 2023) that was used for extracting the top-level labels.
+- [iptc_mapping.json](iptc_mapping.json): mapping between the code for the top-level labels and all sub-labels that belong to the main label. Extracted from the original schema in the Excel format (see above)
