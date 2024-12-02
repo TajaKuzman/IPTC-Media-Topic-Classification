@@ -2,21 +2,27 @@
 
 This repository documents the development of the IPTC Media Topic classifier that provides single-label classification using the 17 top-level topic labels from the [IPTC NewsCodes Media Topic](https://www.iptc.org/std/NewsCodes/treeview/mediatopic/mediatopic-en-GB.html) hierarchical schema.
 
-Table of content:
-- [Data](#data)
-- [Setup & requirements](#setup--requirements)
-- [IPTC NewsCodes Media Topic schema](#iptc-newscodes-media-topic-schema)
-- [Data Development](#data-development)
-	- [Automatic Annotation with GPT-4o](#automatic-annotation-with-gpt-4o)
-	- [Manual Annotation](#manual-annotation)
-		- [Inter-Annotator Agreement](#inter-annotator-agreement)
-- [Experiments](#experiments)
-	- [Results](#results)
-- [Available models](#available-models)
-- [Using the trained model](#using-the-trained-model)
-- [Papers](#papers)
-- [Work In Progress](#work-in-progress)
-- [Acknowledgments](#acknowledgments)
+<!-- TOC -->
+
+- [IPTC Media Topic Classification](#iptc-media-topic-classification)
+	- [Data](#data)
+	- [Published Model](#published-model)
+		- [Using the Published Model](#using-the-published-model)
+	- [Setup & Requirements for Experiments](#setup--requirements-for-experiments)
+	- [IPTC NewsCodes Media Topic Schema](#iptc-newscodes-media-topic-schema)
+	- [Data Development](#data-development)
+		- [Automatic Annotation with GPT-4o](#automatic-annotation-with-gpt-4o)
+		- [Manual Annotation](#manual-annotation)
+			- [Inter-Annotator Agreement](#inter-annotator-agreement)
+			- [Intra-Annotator Agreement](#intra-annotator-agreement)
+	- [Fine-Tuning XLM-RoBERTa Student Models](#fine-tuning-xlm-roberta-student-models)
+		- [Hyperparameter Search](#hyperparameter-search)
+		- [Experiment 1: Comparison of Training Data Sizes](#experiment-1-comparison-of-training-data-sizes)
+		- [Experiment 2: Comparison of Monolingual and Multilingual 5k models](#experiment-2-comparison-of-monolingual-and-multilingual-5k-models)
+	- [Papers](#papers)
+	- [Acknowledgments](#acknowledgments)
+
+<!-- /TOC -->
 
 
 ## Data
@@ -45,15 +51,15 @@ classifier = pipeline("text-classification", model="classla/multilingual-IPTC-ne
 
 # Example texts to classify
 texts = [
-    """Slovenian handball team makes it to Paris Olympics semifinal Lille, 8 August - Slovenia defeated Norway 33:28 in the Olympic men's handball tournament in Lille late on Wednesday to advance to the semifinal where they will face Denmark on Friday evening. This is the best result the team has so far achieved at the Olympic Games and one of the best performances in the history of Slovenia's team sports squads.""",
-    """Moment dog sparks house fire after chewing power bank An indoor monitoring camera shows the moment a dog unintentionally caused a house fire after chewing on a portable lithium-ion battery power bank. In the video released by Tulsa Fire Department in Oklahoma, two dogs and a cat can be seen in the living room before a spark started the fire that spread within minutes. Tulsa Fire Department public information officer Andy Little said the pets escaped through a dog door, and according to local media the family was also evacuated safely. "Had there not been a dog door, they very well could have passed away," he told CBS affiliate KOTV."""]
+	"""Slovenian handball team makes it to Paris Olympics semifinal Lille, 8 August - Slovenia defeated Norway 33:28 in the Olympic men's handball tournament in Lille late on Wednesday to advance to the semifinal where they will face Denmark on Friday evening. This is the best result the team has so far achieved at the Olympic Games and one of the best performances in the history of Slovenia's team sports squads.""",
+	"""Moment dog sparks house fire after chewing power bank An indoor monitoring camera shows the moment a dog unintentionally caused a house fire after chewing on a portable lithium-ion battery power bank. In the video released by Tulsa Fire Department in Oklahoma, two dogs and a cat can be seen in the living room before a spark started the fire that spread within minutes. Tulsa Fire Department public information officer Andy Little said the pets escaped through a dog door, and according to local media the family was also evacuated safely. "Had there not been a dog door, they very well could have passed away," he told CBS affiliate KOTV."""]
 
 # Classify the texts
 results = classifier(texts)
 
 # Output the results
 for result in results:
-    print(result)
+	print(result)
 
 ## Output
 ## {'label': 'sport', 'score': 0.9985264539718628}
@@ -84,9 +90,9 @@ conda activate IPTC_env
 
 Since 2010, the International Press Telecommunications Council (IPTC) maintains a taxonomy for the categorization of news text. This taxonomy takes the form of a tree with 17 top-level topics such as politics, society, or sport. Each topic branches into subtopics until very specific topics are reached, such as adult education, impeachment, or missing person. The taxonomy can be visualized at https://show.newscodes.org/index.html?newscodes=medtop&lang=en-GB&startTo=Show.
 
-For more information on the labels and the schema, see the [IPTC NewsCode guidelines](https://iptc.org/std/NewsCodes/guidelines/).
+For more infromation, see the [IPTC NewsCode Guidelines](https://iptc.org/std/NewsCodes/guidelines/).
 
-Information on all labels, their levels, parent and child labels and definitions can be accessed from the [original spreadsheet](datasets/IPTC-MediaTopic-NewsCodes-mappings.xlsx) or the [JSON dictionary](datasets/iptc_mapping.json) extracted from the spreadsheet. We use the version of the schema from October 24, 2023.
+Information on all labels, their levels, parent and child labels and definitions can be accessed from the [original spreadsheet](datasets/IPTC-MediaTopic-NewsCodes-mappings.xlsx) or the extracted JSON dictionary (datasets/iptc_mapping.json)[datasets/iptc_mapping.json]. We use the version of the schema from October 24, 2023.
 
 ```
 labels = ['disaster, accident and emergency incident',
@@ -136,13 +142,6 @@ label_dict_with_description_ext = {
 
 Additionally, for the manual annotation, we implemented 3 additional labels to mark the text that should be discarded (due to being unsuitable or too ambigious - see [Annotation Guidelines](IPTC_Annotation_Guidelines.pdf) for the description of the labels):
 ``` ["do not know", "not news", "multiple"]```
-
-
-## Data
-
-Final training and test datasets are available at:
-- training dataset, annotated with GPT-4o: *[EMMediaTopic dataset](http://hdl.handle.net/11356/1991)*: published on the CLARIN.SI repository
-- test dataset, manually annotated: *IPTC-top-test.jsonl* - available upon request to the authors (taja dot kuzman at ijs.si) via [private GitHub repository](https://github.com/clarinsi/IPTC-top-test) inside the CLARIN.SI group
 
 ## Data Development
 
@@ -299,23 +298,23 @@ model_args = ClassificationArgs()
 
 # define hyperparameters
 model_args ={"overwrite_output_dir": True,
-             "labels_list": LABELS,
-             "num_train_epochs": epoch,
-             "learning_rate": 8e-06,
-             "train_batch_size": 32,
-             # Comment out no_cache and no_save if you want to save the model
-             "no_cache": True,
-             "no_save": True,
-            # Only the trained model will be saved (if you want to save it)
-            # - to prevent filling all of the space
-            # "save_model_every_epoch":False,
-             "max_seq_length": 512,
-             "save_steps": -1,
-            "wandb_project": "IPTC",
-            "use_multiprocessing":False,
-            "use_multiprocessing_for_evaluation":False,
-            "silent": True,
-             }
+			 "labels_list": LABELS,
+			 "num_train_epochs": epoch,
+			 "learning_rate": 8e-06,
+			 "train_batch_size": 32,
+			 # Comment out no_cache and no_save if you want to save the model
+			 "no_cache": True,
+			 "no_save": True,
+			# Only the trained model will be saved (if you want to save it)
+			# - to prevent filling all of the space
+			# "save_model_every_epoch":False,
+			 "max_seq_length": 512,
+			 "save_steps": -1,
+			"wandb_project": "IPTC",
+			"use_multiprocessing":False,
+			"use_multiprocessing_for_evaluation":False,
+			"silent": True,
+			 }
 ```
 
 ### Experiment 1: Comparison of Training Data Sizes
@@ -373,10 +372,15 @@ Averaged over 3 runs:
 
 ## Papers
 
-The paper on this work is currently in submission. In case you use any of the components for your research, please refer to (and cite) [this paper](https://arxiv.org/abs/2411.19638):
+In case you use any of the components for your research, please refer to (and cite) [this paper](https://arxiv.org/abs/2411.19638) (in submission):
 
 ```
-@book{Kuzman_Ljubesic_2024, place={[Ljubljana}, series={IJS delovno poročilo}, title={Embeddings-based techniques for Media Monitoring Applications (EMMA). WP1, Keyword extraction and topic categorization. Deliverable D1.2, Technical Report on Cross-lingual IPTC News Topic Classification}, note={Nasl. z nasl. zaslona}, publisher={Jožef Stefan Institute]}, author={Kuzman, Taja and Ljubešić, Nikola}, year={2024}, collection={IJS delovno poročilo} }
+@article{kuzman2024llmteacherstudent,
+      title={{LLM Teacher-Student Framework for Text Classification With No Manually Annotated Data: A Case Study in IPTC News Topic Classification}}, 
+      author={Kuzman, Taja and Ljube{\v{s}}i{\'c}, Nikola},
+      journal={arXiv preprint arXiv:2411.19638},
+      year={2024}
+}
 ```
 
 ## Acknowledgments
