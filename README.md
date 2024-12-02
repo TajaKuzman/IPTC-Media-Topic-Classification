@@ -245,10 +245,15 @@ for result in results:
 
 ## Papers
 
-In case you use any of the components for your research, please refer to (and cite) the papers:
+The paper on this work is currently in submission. In case you use any of the components for your research, please refer to (and cite) [this paper](https://arxiv.org/abs/2411.19638):
 
 ```
-@book{Kuzman_Ljubesic_2024, place={[Ljubljana}, series={IJS delovno poročilo}, title={Embeddings-based techniques for Media Monitoring Applications (EMMA). WP1, Keyword extraction and topic categorization. Deliverable D1.2, Technical Report on Cross-lingual IPTC News Topic Classification}, note={Nasl. z nasl. zaslona}, publisher={Jožef Stefan Institute]}, author={Kuzman, Taja and Ljubešić, Nikola}, year={2024}, collection={IJS delovno poročilo} }
+@article{kuzman2024llmteacherstudent,
+      title={{LLM Teacher-Student Framework for Text Classification With No Manually Annotated Data: A Case Study in IPTC News Topic Classification}}, 
+      author={Kuzman, Taja and Ljube{\v{s}}i{\'c}, Nikola},
+      journal={arXiv preprint arXiv:2411.19638},
+      year={2024}
+}
 ```
 
 ## Work In Progress
