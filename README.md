@@ -2,27 +2,23 @@
 
 This repository documents the development of the IPTC Media Topic classifier that provides single-label classification using the 17 top-level topic labels from the [IPTC NewsCodes Media Topic](https://www.iptc.org/std/NewsCodes/treeview/mediatopic/mediatopic-en-GB.html) hierarchical schema.
 
-<!-- TOC -->
-
-- [IPTC Media Topic Classification](#iptc-media-topic-classification)
-	- [Data](#data)
-	- [Published Model](#published-model)
-		- [Using the Published Model](#using-the-published-model)
-	- [Setup & Requirements for Experiments](#setup--requirements-for-experiments)
-	- [IPTC NewsCodes Media Topic Schema](#iptc-newscodes-media-topic-schema)
-	- [Data Development](#data-development)
-		- [Automatic Annotation with GPT-4o](#automatic-annotation-with-gpt-4o)
-		- [Manual Annotation](#manual-annotation)
-			- [Inter-Annotator Agreement](#inter-annotator-agreement)
-			- [Intra-Annotator Agreement](#intra-annotator-agreement)
-	- [Fine-Tuning XLM-RoBERTa Student Models](#fine-tuning-xlm-roberta-student-models)
-		- [Hyperparameter Search](#hyperparameter-search)
-		- [Experiment 1: Comparison of Training Data Sizes](#experiment-1-comparison-of-training-data-sizes)
-		- [Experiment 2: Comparison of Monolingual and Multilingual 5k models](#experiment-2-comparison-of-monolingual-and-multilingual-5k-models)
-	- [Papers](#papers)
-	- [Acknowledgments](#acknowledgments)
-
-<!-- /TOC -->
+Table of content:
+- [Data](#data)
+- [Published Model](#published-model)
+	- [Using the Published Model](#using-the-published-model)
+- [Setup & Requirements for Experiments](#setup--requirements-for-experiments)
+- [IPTC NewsCodes Media Topic Schema](#iptc-newscodes-media-topic-schema)
+- [Data Development](#data-development)
+	- [Automatic Annotation with GPT-4o](#automatic-annotation-with-gpt-4o)
+	- [Manual Annotation](#manual-annotation)
+		- [Inter-Annotator Agreement](#inter-annotator-agreement)
+		- [Intra-Annotator Agreement](#intra-annotator-agreement)
+- [Fine-Tuning XLM-RoBERTa Student Models](#fine-tuning-xlm-roberta-student-models)
+	- [Hyperparameter Search](#hyperparameter-search)
+	- [Experiment 1: Comparison of Training Data Sizes](#experiment-1-comparison-of-training-data-sizes)
+	- [Experiment 2: Comparison of Monolingual and Multilingual 5k models](#experiment-2-comparison-of-monolingual-and-multilingual-5k-models)
+- [Papers](#papers)
+- [Acknowledgments](#acknowledgments)
 
 
 ## Data
@@ -92,7 +88,7 @@ Since 2010, the International Press Telecommunications Council (IPTC) maintains 
 
 For more infromation, see the [IPTC NewsCode Guidelines](https://iptc.org/std/NewsCodes/guidelines/).
 
-Information on all labels, their levels, parent and child labels and definitions can be accessed from the [original spreadsheet](datasets/IPTC-MediaTopic-NewsCodes-mappings.xlsx) or the extracted JSON dictionary (datasets/iptc_mapping.json)[datasets/iptc_mapping.json]. We use the version of the schema from October 24, 2023.
+Information on all labels, their levels, parent and child labels and definitions can be accessed from the [original spreadsheet](data/IPTC-MediaTopic-NewsCodes-mappings.xlsx) or the extracted JSON dictionary ([iptc_mapping.json](data/iptc_mapping.json)). We use the version of the schema from October 24, 2023.
 
 ```
 labels = ['disaster, accident and emergency incident',
@@ -114,33 +110,7 @@ labels = ['disaster, accident and emergency incident',
  'sport']
 ```
 
-Description of the 17 top labels:
-```
-Extended description
-
-Based on the description of the labels and sub-labels here: https://www.iptc.org/std/NewsCodes/treeview/mediatopic/mediatopic-en-GB.html
-
-label_dict_with_description_ext = {
-	'disaster, accident and emergency incident - man-made or natural events resulting in injuries, death or damage, e.g., explosions, transport accidents, famine, drowning, natural disasters, emergency planning and response.': 0,
-	'human interest - news about life and behavior of royalty and celebrities, news about obtaining awards, ceremonies (graduation, wedding, funeral, celebration of launching something), birthdays and anniversaries, and news about silly or stupid human errors.': 1,
-	'politics - news about local, regional, national and international exercise of power, including news about election, fundamental rights, government, non-governmental organisations, political crises, non-violent international relations, public employees, government policies.': 2,
-	'education - all aspects of furthering knowledge, formally or informally, including news about schools, curricula, grading, remote learning, teachers and students.': 3,
-	'crime, law and justice - news about committed crime and illegal activities, the system of courts, law and law enforcement (e.g., judges, lawyers, trials, punishments of offenders).': 4,
-	'economy, business and finance - news about companies, products and services, any kind of industries, national economy, international trading, banks, (crypto)currency, business and trade societies, economic trends and indicators (inflation, employment statistics, GDP, mortgages, ...), international economic institutions, utilities (electricity, heating, waste management, water supply).': 5,
-	'conflict, war and peace - news about terrorism, wars, wars victims, cyber warfare, civil unrest (demonstrations, riots, rebellions), peace talks and other peace activities.': 6,
-	'arts, culture, entertainment and media - news about cinema, dance, fashion, hairstyle, jewellery, festivals, literature, music, theatre, TV shows, painting, photography, woodworking, art exhibitions, libraries and museums, language, cultural heritage, news media, radio and television, social media, influencers, and disinformation.': 7,
-	'labour - news about employment, employment legislation, employees and employers, commuting, parental leave, volunteering, wages, social security, labour market, retirement, unemployment, unions.': 8,
-	'weather - news about weather forecasts, weather phenomena and weather warning.': 9,
-	'religion - news about religions, cults, religious conflicts, relations between religion and government, churches, religious holidays and festivals, religious leaders and rituals, and religious texts.': 10,
-	'society - news about social interactions (e.g., networking), demographic analyses, population census, discrimination, efforts for inclusion and equity, emigration and immigration, communities of people and minorities (LGBTQ, older people, children, indigenous people, etc.), homelessness, poverty, societal problems (addictions, bullying), ethical issues (suicide, euthanasia, sexual behavior) and social services and charity, relationships (dating, divorce, marriage), family (family planning, adoption, abortion, contraception, pregnancy, parenting).': 11,
-	'health - news about diseases, injuries, mental health problems, health treatments, diets, vaccines, drugs, government health care, hospitals, medical staff, health insurance.': 12,
-	'environment - news about climate change, energy saving, sustainability, pollution, population growth, natural resources, forests, mountains, bodies of water, ecosystem, animals, flowers and plants.': 13,
-	'lifestyle and leisure - news about hobbies, clubs and societies, games, lottery, enthusiasm about food or drinks, car/motorcycle lovers, public holidays, leisure venues (amusement parks, cafes, bars, restaurants, etc.), exercise and fitness, outdoor recreational activities (e.g., fishing, hunting), travel and tourism, mental well-being, parties, maintaining and decorating house and garden.': 14,
-	'science and technology -  news about natural sciences and social sciences, mathematics, technology and engineering, scientific institutions, scientific research, scientific publications and innovation.': 15,
-	'sport - news about sports that can be executed in competitions - basketball, football, swimming, athletics, chess, dog racing, diving, golf, gymnastics, martial arts, climbing, etc.; sport achievements, sport events, sport organisation, sport venues (stadiums, gymnasiums, ...), referees, coaches, sport clubs, drug use in sport.': 16}
-```
-
-Additionally, for the manual annotation, we implemented 3 additional labels to mark the text that should be discarded (due to being unsuitable or too ambigious - see [Annotation Guidelines](IPTC_Annotation_Guidelines.pdf) for the description of the labels):
+Additionally, for the manual annotation, we implemented 3 additional labels to mark the text that should be discarded (due to being unsuitable or too ambigious - see [Annotation Guidelines](data/IPTC_Annotation_Guidelines.pdf) for the description of the labels):
 ``` ["do not know", "not news", "multiple"]```
 
 ## Data Development
@@ -194,7 +164,7 @@ label_dict_with_description_ext = {
 
 Prediction on 5000 instances cost 39.34€ and took one hour.
 
-The dataset with predictions -- the EMMediaTopic 1.0 dataset --consists of 21.000 instances (5250 per language) and is available on [the CLARIN.SI repository](http://hdl.handle.net/11356/1991).
+The dataset with predictions - the EMMediaTopic 1.0 dataset - consists of 21.000 instances (5250 per language) and is available on [the CLARIN.SI repository](http://hdl.handle.net/11356/1991).
 
 Label distribution on automatically-annotated training and development data:
 
@@ -263,11 +233,11 @@ We also calculate the consistency of the human annotator (1st annotator) versus 
 
 ## Fine-Tuning XLM-RoBERTa Student Models
 
-The models are trained and evaluated the training and dev split, respectively, available under the name the [EMMediaTopic 1.0 dataset](http://hdl.handle.net/11356/1991).
+The models are trained and evaluated the training and dev split, respectively, available as the [EMMediaTopic 1.0 dataset](http://hdl.handle.net/11356/1991).
 
 The experiments were ran on a GPU.
 
-The models are evaluated on the manually-annotated test split which is available upon request. See the script [`machine-learning-experiments-code/evaluate-on-test-sample.ipynb`](machine-learning-experiments-code/evaluate-on-test-sample.ipynb) for the code for evaluation of the models.
+The models are evaluated on the manually-annotated test split which is available upon request. See the script [machine-learning-experiments-code/evaluate-on-test-sample.ipynb](machine-learning-experiments-code/evaluate-on-test-sample.ipynb) for the code for evaluation of the models.
 
 The best-performing model has been published to [Hugging Face](https://huggingface.co/classla/multilingual-IPTC-news-topic-classifier) (see Section [Published Model](#published-model)).
 
@@ -385,4 +355,4 @@ In case you use any of the components for your research, please refer to (and ci
 
 ## Acknowledgments
 
-**Fundings**: This work was supported by the Slovenian Research and Innovation Agency research project [Embeddings-based techniques for Media Monitoring Applications](https://emma.ijs.si/en/project-plans/) (L2-50070, co-funded by the Kliping d.o.o. agency).
+**Funding**: This work was supported by the project [Embeddings-based techniques for Media Monitoring Applications](https://emma.ijs.si/en/project-plans/) (L2-50070, co-funded by the Kliping d.o.o. agency), and the research programme Language resources and technologies for Slovene (P6-0411), both funded by the Slovenian Research and Innovation Agency (ARIS).
