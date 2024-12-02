@@ -84,9 +84,9 @@ conda activate IPTC_env
 
 Since 2010, the International Press Telecommunications Council (IPTC) maintains a taxonomy for the categorization of news text. This taxonomy takes the form of a tree with 17 top-level topics such as politics, society, or sport. Each topic branches into subtopics until very specific topics are reached, such as adult education, impeachment, or missing person. The taxonomy can be visualized at https://show.newscodes.org/index.html?newscodes=medtop&lang=en-GB&startTo=Show.
 
-For more infromation, see the [IPTC NewsCode Guidelines](https://iptc.org/std/NewsCodes/guidelines/).
+For more information on the labels and the schema, see the [IPTC NewsCode guidelines](https://iptc.org/std/NewsCodes/guidelines/).
 
-Information on all labels, their levels, parent and child labels and definitions can be accessed from the [original spreadsheet](datasets/IPTC-MediaTopic-NewsCodes-mappings.xlsx) or the extracted JSON dictionary (datasets/iptc_mapping.json)[datasets/iptc_mapping.json]. We use the version of the schema from October 24, 2023.
+Information on all labels, their levels, parent and child labels and definitions can be accessed from the [original spreadsheet](datasets/IPTC-MediaTopic-NewsCodes-mappings.xlsx) or the [JSON dictionary](datasets/iptc_mapping.json) extracted from the spreadsheet. We use the version of the schema from October 24, 2023.
 
 ```
 labels = ['disaster, accident and emergency incident',
@@ -136,6 +136,13 @@ label_dict_with_description_ext = {
 
 Additionally, for the manual annotation, we implemented 3 additional labels to mark the text that should be discarded (due to being unsuitable or too ambigious - see [Annotation Guidelines](IPTC_Annotation_Guidelines.pdf) for the description of the labels):
 ``` ["do not know", "not news", "multiple"]```
+
+
+## Data
+
+Final training and test datasets are available at:
+- training dataset, annotated with GPT-4o: *[EMMediaTopic dataset](http://hdl.handle.net/11356/1991)*: published on the CLARIN.SI repository
+- test dataset, manually annotated: *IPTC-top-test.jsonl* - available upon request to the authors (taja dot kuzman at ijs.si) via [private GitHub repository](https://github.com/clarinsi/IPTC-top-test) inside the CLARIN.SI group
 
 ## Data Development
 
@@ -366,7 +373,7 @@ Averaged over 3 runs:
 
 ## Papers
 
-In case you use any of the components for your research, please refer to (and cite) the papers:
+The paper on this work is currently in submission. In case you use any of the components for your research, please refer to (and cite) [this paper](https://arxiv.org/abs/2411.19638):
 
 ```
 @book{Kuzman_Ljubesic_2024, place={[Ljubljana}, series={IJS delovno poročilo}, title={Embeddings-based techniques for Media Monitoring Applications (EMMA). WP1, Keyword extraction and topic categorization. Deliverable D1.2, Technical Report on Cross-lingual IPTC News Topic Classification}, note={Nasl. z nasl. zaslona}, publisher={Jožef Stefan Institute]}, author={Kuzman, Taja and Ljubešić, Nikola}, year={2024}, collection={IJS delovno poročilo} }
