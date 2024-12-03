@@ -212,11 +212,11 @@ Inter-Annotator Agreement was calculated on a sample of 339 instances, balanced 
 
 We calculate the nominal Krippendorff's Alpha.
 
-| pair                        |   nominal Krippendorff Alpha |
+| pair                        |   nominal Krippendorff's Alpha |
 |:----------------------------|-----------------------------:|
-| pred_GPT4o & 2nd_annotation |                     0.752399 |
-| IPTC_true & 2nd_annotation  |                     0.727622 |
-| pred_GPT4o & IPTC_true      |                     0.692999 |
+| 2nd annotator & GPT-4o  |                     0.752399 |
+| 1st annotator & 2nd annotator  |                     0.727622 |
+| 1st annotator & GPT-4o      |                     0.692999 |
 
 Results show satisfactory agreement, higher than 0.667.
 
@@ -226,9 +226,9 @@ The code that was used for calculating inter- and intra-annotator agreement is a
 
 We also calculate the consistency of the human annotator (1st annotator) versus the GPT annotator, using the nominal Krippendorff's Alpha.
 
-| annotator                                |   nominal Krippendorff Alpha |
+| annotator                                |   nominal Krippendorff's Alpha |
 |:------------------------------------|-----------------------------:|
-| GPT4o          |                     0.933966 |
+| GPT-4o          |                     0.933966 |
 | 1st annotator      |                     0.796385 |
 
 ## Fine-Tuning XLM-RoBERTa Student Models
@@ -297,15 +297,15 @@ To run multiple runs: `nohup bash machine-learning-experiments-code/evaluate_tra
 **Results, averaged across 5 runs (each run is trained on a different random sample):**
 
 
-| model             |   macro_F1 |   std_macro_f1 |   micro_F1 |   std_micro_f1 |
+| model             |   macro-F1 |   std (macro-F1) |   micro-F1 |   std (micro-F1) |
 |:------------------|-----------:|---------------:|-----------:|---------------:|
-| pred_GPT4o        |   0.731083 |     0.00307282 |   0.722173 |     0.00270598 |
-| 20k-model-sample  |   0.728469 |     0.00276209 |   0.716386 |     0.00289733 |
-| 15k-model-sample  |   0.727556 |     0.00868345 |   0.7155   |     0.00805488 |
-| 10k-model-sample  |   0.72047  |     0.0052617  |   0.70806  |     0.00540954 |
-| 5k-model-sample   |   0.715907 |     0.0076491  |   0.703809 |     0.00788756 |
-| 2.5k-model-sample |   0.70752  |     0.00783596 |   0.694774 |     0.00855553 |
-| 1k-model-sample   |   0.692015 |     0.00963504 |   0.678299 |     0.00960936 |
+| GPT-4o        |   0.731083 |     0.00307282 |   0.722173 |     0.00270598 |
+| 20k XLM-R model  |   0.728469 |     0.00276209 |   0.716386 |     0.00289733 |
+| 15k XLM-R model  |   0.727556 |     0.00868345 |   0.7155   |     0.00805488 |
+| 10k XLM-R model  |   0.72047  |     0.0052617  |   0.70806  |     0.00540954 |
+| 5k XLM-R model   |   0.715907 |     0.0076491  |   0.703809 |     0.00788756 |
+| 2.5k XLM-R model |   0.70752  |     0.00783596 |   0.694774 |     0.00855553 |
+| 1k XLM-R model   |   0.692015 |     0.00963504 |   0.678299 |     0.00960936 |
 
 ![](/figures/impact-of-training-data-size.png)
 
@@ -316,14 +316,14 @@ We train monolingual 5k models and compare them to the multilingual 5k model.
 **Macro-F1 results for each language**
 
 
-| model                 |   hr_macro_F1 |   hr_std |   ca_macro_F1 |   ca_std |   sl_macro_F1 |   sl_std |   el_macro_F1 |   el_std |
+| model                 |   hr (macro-F1) |   hr std |   ca (macro-F1) |   ca std |   sl (macro-F1) |   sl std |   el (macro-F1) |   el std |
 |:----------------------|--------------:|---------:|--------------:|---------:|--------------:|---------:|--------------:|---------:|
-| GPT4o                 |         0.721 |    0.001 |         0.702 |    0.001 |         0.748 |    0.001 |         0.738 |    0.009 |
-| 5k-sl-model           |         0.711 |    0.007 |         0.66  |    0.016 |         0.736 |    0.014 |         0.721 |    0.013 |
-| 5k-model-multilingual |         0.707 |    0.011 |         0.656 |    0.024 |         0.741 |    0.007 |         0.729 |    0.004 |
-| 5k-ca-model           |         0.706 |    0.012 |         0.671 |    0.008 |         0.728 |    0.005 |         0.715 |    0.014 |
-| 5k-hr-model           |         0.701 |    0.017 |         0.672 |    0.005 |         0.733 |    0.014 |         0.739 |    0.011 |
-| 5k-el-model           |         0.674 |    0.004 |         0.662 |    0.012 |         0.716 |    0.011 |         0.706 |    0.013 |
+| sl model           |         0.711 |    0.007 |         0.66  |    0.016 |         0.736 |    0.014 |         0.721 |    0.013 |
+| ca model           |         0.706 |    0.012 |         0.671 |    0.008 |         0.728 |    0.005 |         0.715 |    0.014 |
+| hr model           |         0.701 |    0.017 |         0.672 |    0.005 |         0.733 |    0.014 |         0.739 |    0.011 |
+| el model           |         0.674 |    0.004 |         0.662 |    0.012 |         0.716 |    0.011 |         0.706 |    0.013 |
+| multilingual model |         0.707 |    0.011 |         0.656 |    0.024 |         0.741 |    0.007 |         0.729 |    0.004 |
+| GPT-4o                 |         0.721 |    0.001 |         0.702 |    0.001 |         0.748 |    0.001 |         0.738 |    0.009 |
 
 ## Papers
 
