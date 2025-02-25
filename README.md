@@ -343,4 +343,4 @@ We train monolingual 5k models and compare them to the multilingual 5k model.
 
 ## Acknowledgments
 
-**Funding**: This work was supported by the projects  [Embeddings-based techniques for Media Monitoring Applications](https://emma.ijs.si/en/project-plans/) (L2-50070, co-funded by the Kliping d.o.o. agency), ``Large Language Models for Digital Humanities'' (GC-0002), and the research programme ``Language resources and technologies for Slovene'' (P6-0411), all funded by the Slovenian Research and Innovation Agency (ARIS).
+**Funding**: This work was supported by the projects  [Embeddings-based techniques for Media Monitoring Applications](https://emma.ijs.si/en/project-plans/) (L2-50070, co-funded by the Kliping d.o.o. agency), Large Language Models for Digital Humanities (GC-0002), and the research programme Language resources and technologies for Slovene (P6-0411), all funded by the Slovenian Research and Innovation Agency (ARIS).
