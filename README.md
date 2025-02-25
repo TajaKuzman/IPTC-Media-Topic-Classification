@@ -3,6 +3,7 @@
 This repository documents the development of the IPTC Media Topic classifier that provides single-label classification using the 17 top-level topic labels from the [IPTC NewsCodes Media Topic](https://www.iptc.org/std/NewsCodes/treeview/mediatopic/mediatopic-en-GB.html) hierarchical schema.
 
 Table of content:
+- [Papers](#papers)
 - [Data](#data)
 - [Published Model](#published-model)
 	- [Using the Published Model](#using-the-published-model)
@@ -17,9 +18,24 @@ Table of content:
 	- [Hyperparameter Search](#hyperparameter-search)
 	- [Experiment 1: Comparison of Training Data Sizes](#experiment-1-comparison-of-training-data-sizes)
 	- [Experiment 2: Comparison of Monolingual and Multilingual 5k models](#experiment-2-comparison-of-monolingual-and-multilingual-5k-models)
-- [Papers](#papers)
 - [Acknowledgments](#acknowledgments)
 
+## Papers
+
+In case you use any of the components for your research, please refer to (and cite) [this paper](https://doi.org/10.1109/ACCESS.2025.3544814): "LLM Teacher-Student Framework for Text Classification With No Manually Annotated Data: A Case Study in IPTC News Topic Classification" (Kuzman and Ljubešić, 2025).
+
+```
+@ARTICLE{10900365,
+  author={Kuzman, Taja and Ljubešić, Nikola},
+  journal={IEEE Access}, 
+  title={LLM Teacher-Student Framework for Text Classification With No Manually Annotated Data: A Case Study in IPTC News Topic Classification}, 
+  year={2025},
+  volume={},
+  number={},
+  pages={1-1},
+  keywords={Data models;Annotations;Media;Manuals;Multilingual;Computational modeling;Training;Training data;Transformers;Text categorization;Multilingual text classification;IPTC;large language models;LLMs;news topic;topic classification;training data preparation;data annotation},
+  doi={10.1109/ACCESS.2025.3544814}}
+```
 
 ## Data
 
@@ -325,19 +341,6 @@ We train monolingual 5k models and compare them to the multilingual 5k model.
 | multilingual model |         0.707 |    0.011 |         0.656 |    0.024 |         0.741 |    0.007 |         0.729 |    0.004 |
 | GPT-4o                 |         0.721 |    0.001 |         0.702 |    0.001 |         0.748 |    0.001 |         0.738 |    0.009 |
 
-## Papers
-
-In case you use any of the components for your research, please refer to (and cite) [this paper](https://arxiv.org/abs/2411.19638) (in submission):
-
-```
-@article{kuzman2024llmteacherstudent,
-      title={{LLM Teacher-Student Framework for Text Classification With No Manually Annotated Data: A Case Study in IPTC News Topic Classification}}, 
-      author={Kuzman, Taja and Ljube{\v{s}}i{\'c}, Nikola},
-      journal={arXiv preprint arXiv:2411.19638},
-      year={2024}
-}
-```
-
 ## Acknowledgments
 
-**Funding**: This work was supported by the project [Embeddings-based techniques for Media Monitoring Applications](https://emma.ijs.si/en/project-plans/) (L2-50070, co-funded by the Kliping d.o.o. agency), and the research programme Language resources and technologies for Slovene (P6-0411), both funded by the Slovenian Research and Innovation Agency (ARIS).
+**Funding**: This work was supported by the projects  [Embeddings-based techniques for Media Monitoring Applications](https://emma.ijs.si/en/project-plans/) (L2-50070, co-funded by the Kliping d.o.o. agency), ``Large Language Models for Digital Humanities'' (GC-0002), and the research programme ``Language resources and technologies for Slovene'' (P6-0411), all funded by the Slovenian Research and Innovation Agency (ARIS).
